@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@500&display=swap" rel="stylesheet">
+    <title>loading</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+        }
+        
+        .page {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 30%;
+            height: 60px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .road {
+            width: 85%;
+            height: 60px;
+            font-family: 'Handjet', cursive;
+            color: white;
+            font-size: 36px;
+            line-height: 60px;
+            text-align: center;
+            letter-spacing: 3px;
+            position: absolute;
+            top: 5%;
+            left: 5%;
+        }
+
+        .road::after {
+            content: "";
+            width: 100%;
+            height: 50px;
+            background-color: black;
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            animation-name: eat;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        @keyframes eat {
+            0% {
+                left: 5%;
+                transform: translate(-100%, 0);
+                opacity: 1;
+            }
+
+            44% {
+                left: 100%;
+                transform: translate(-100%, 0);
+            }
+
+
+            80% {
+                opacity: 1;
+            }
+
+            85% {
+                opacity: 0;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 100%;
+                transform: translate(-100%, 0);
+                opacity: 0;
+            }
+        }
+
+        .move {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            animation-name: run;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        @keyframes run {
+            0% {
+                left: 5%;
+                transform: translate(0, 0);
+            }
+
+            48% {
+                left: 95%;
+                transform: translate(-100%, 0) scaleX(1);
+            }
+
+            50% {
+                left: 95%;
+                transform: translate(-100%, 0) scaleX(-1);
+            }
+
+            80% {
+                left: 5%;
+                transform: translate(0, 0) scaleX(-1);
+            }
+
+            84% {
+                left: 5%;
+                transform: translate(0, 0) scaleX(1);
+            }
+
+            100% {
+                left: 5%;
+                transform: translate(0, 0) scaleX(1);
+            }
+        }
+
+        .pacman {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            border: 30px solid yellow;
+            border-right: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+            position: relative;
+        }
+
+        .pacman::before {
+            content: "";
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            border: 30px solid yellow;
+            border-right: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            animation-name: close-top;
+            animation-duration: 0.8s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .pacman::after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            border: 30px solid yellow;
+            border-right: 30px solid transparent;
+            border-top: 30px solid transparent;
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            animation-name: close-bottom;
+            animation-duration: 0.8s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .pacman-eye {
+            width: 8px;
+            height: 8px;
+            background-color: black;
+            border-radius: 50%;
+            position: absolute;
+            top: -18px;
+            left: 0px;
+        }
+
+        @keyframes close-top {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(45deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes close-bottom {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(-45deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <main>
+            <div class="road">
+                loading...
+            </div>
+            <div class="move">
+                <div class="pacman">
+                    <div class="pacman-eye"></div>
+                </div>
+            </div>
+    </div>
+
+    </main>
+</body>
+
+</html>
