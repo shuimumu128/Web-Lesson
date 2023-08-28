@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Color Game</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Handjet', cursive;
+            font-size: 40px;
+            width: 100%;
+            height: 100vh;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .end {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(44, 51, 56, 0.662);
+            color: white;
+            font-size: 5em;
+            line-height: 60px;
+            text-align: center;
+            padding: 5%;
+            position: absolute;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+
+        .result {
+            width: 40%;
+            height: 80%;
+        }
+
+        .result p {
+            color: rgb(255, 108, 82);
+        }
+
+        .again-btn {
+            color: rgb(215, 215, 215);
+            font-size: 80px;
+            line-height: 0;
+            transition: 0.5s;
+        }
+
+        .again-btn:hover {
+            text-shadow: 0 0 5px white;
+            transition: 0.5s;
+        }
+
+        main {
+            width: 500px;
+            height: 580px;
+            background-color: rgb(232, 232, 232);
+        }
+
+        .content {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .score {
+            font-size: 60px;
+            color: rgb(248, 94, 33);
+            font-weight: 900;
+        }
+
+        .pause {
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            border: 0;
+            background-color: unset;
+            cursor: pointer;
+        }
+
+        .bigBox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+        }
+
+        .mask {
+            width: 500px;
+            height: 500px;
+            background-color: rgb(232, 232, 232);
+            font-size: 8em;
+            line-height: 450px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, calc(-50% + 40px)) rotate(90deg);
+            z-index: 10;
+            display: none;
+        }
+
+        #pause-check:checked~.mask {
+            display: block;
+        }
+
+        .box {
+            background-color: brown;
+        }
+
+        .showup {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="end">
+        <div class="result">
+            <span></span>
+            <p></p>
+            <div class="again-btn">
+                <i class="fa-solid fa-arrow-rotate-right"></i>
+            </div>
+        </div>
+    </div>
+    <main>
+        <div class="content">
+            <div class="time">60</div>
+            <div class="score"></div>
+            <input type="checkbox" id="pause-check" hidden>
+            <label for="pause-check" class="pause">
+                <i class="fa-solid fa-pause"></i>
+            </label>
+            <div class="mask">:)</div>
+        </div>
+        <div class="bigBox"></div>
+    </main>
+    <script>
+        let bigBox = document.querySelector('.bigBox');
+        let score = document.querySelector('.score');
+        let finalScore = document.querySelector('.result p');
+
+        createBox(1);
+
+        function boxsize(w) {
+            return (500 - (w * 10 + 20)) / (w + 1);
+        };
+
+        function createBox(lv) {
+            score.innerHTML = lv;
+            finalScore.innerHTML = lv - 1;
+            let boxnumber = (lv + 1) * (lv + 1)
+            let randomNum = Math.floor(Math.random() * boxnumber);
+            let r = Math.floor(Math.random() * 256);
+            let g = Math.floor(Math.random() * 256);
+            let b = Math.floor(Math.random() * 256);
+            let a = 0.5;
+
+            for (let i = 0; i < boxnumber; i++) {
+                if (i === randomNum) {
+                    bigBox.innerHTML += `<div class="box ans" style="background-color:rgba(${r}, ${g}, ${b}, ${a + 0.001 * i});width: ${boxsize(lv)}px;height: ${boxsize(lv)}px;"></div>`;
+                } else {
+                    bigBox.innerHTML += `<div class="box" style="background-color:rgb(${r}, ${g}, ${b});width: ${boxsize(lv)}px;height: ${boxsize(lv)}px;"></div>`;
+                }
+            }
+            let ans = bigBox.querySelector('.box.ans')
+
+            ans.addEventListener('click', function () {
+                bigBox.innerHTML = '';
+                let nextLv = lv + 1;
+                createBox(nextLv);
+                result(lv - 1);
+            })
+        };
+
+        let resultText = document.querySelector('.result span');
+
+        result(0);
+
+        function result(a) {
+            if (a < 5) {
+                resultText.innerHTML = 'Oh...';
+            } else if (a < 10) {
+                resultText.innerHTML = 'Nice';
+            } else if (a < 15) {
+                resultText.innerHTML = 'Good';
+            } else if (a < 20) {
+                resultText.innerHTML = 'Well Done';
+            } else if (a < 25) {
+                resultText.innerHTML = 'Amazing!';
+            } else if (a < 30) {
+                resultText.innerHTML = 'Unbelievable!';
+            } else if (a < 35) {
+                resultText.innerHTML = 'Oh My God!';
+            } else if (a >= 35) {
+                resultText.innerHTML = 'Crazy Guy';
+            }
+        };
+
+        let time = document.querySelector('.time');
+        let btnPause = document.querySelector('.pause');
+        let minute = 59;
+        let end = document.querySelector('.end');
+        let flag = 1;
+
+        let timer = setInterval(() => {
+            if (minute < 0) {
+                clearInterval(timer);
+                end.classList.add('showup');
+            } else {
+                time.innerHTML = minute;
+                minute--;
+            }
+        }, 1000);
+
+
+        btnPause.addEventListener('click', function () {
+            if (flag == 1) {
+                btnPause.innerHTML = '<i class="fa-solid fa-play"></i>';
+                clearInterval(timer);
+                flag = 2;
+            } else {
+                btnPause.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                timer = setInterval(() => {
+                    if (minute < 0) {
+                        clearInterval(timer);
+                        end.classList.add('showup');
+                    } else {
+                        time.innerHTML = minute;
+                        minute--;
+                    }
+                }, 1000);
+                flag = 1;
+            }
+        });
+
+        let againBtn = document.querySelector('.again-btn');
+
+        againBtn.addEventListener('click', () => {
+            end.classList.remove('showup');
+            bigBox.innerHTML = '';
+            createBox(1);
+            time.innerHTML = '60';
+            minute = 59;
+            timer = setInterval(() => {
+                if (minute < 0) {
+                    clearInterval(timer);
+                    end.classList.add('showup');
+                } else {
+                    time.innerHTML = minute;
+                    minute--;
+                }
+            }, 1000);
+        });
+
+
+        // let boxes = bigBox.querySelectorAll('.box')
+
+        // boxes.forEach(function (box) {
+        //     box.addEventListener('click', function () {
+        //         if (bigBox.classList.contains('ans')) {
+        //             bigBox.innerHTML = '';
+        //             randomNum = Math  .floor(Math.random() * 4);
+        //             createBox();
+        //         } else {
+        //             alert('猜錯囉朋友');
+        //         }
+        //     })
+        // })
+    </script>
+</body>
+
+</html>

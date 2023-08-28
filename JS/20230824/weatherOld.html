@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Weather</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .page {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+        }
+
+        nav {
+            width: 20%;
+            height: 100%;
+            background-color: rgb(170, 206, 255);
+            display: flex;
+            align-items: center;
+        }
+
+        main {
+            flex: 1;
+            height: 100%;
+            padding: 5%;
+
+        }
+
+        .tabs {
+            width: 80%;
+            margin: auto;
+        }
+
+        .tab {
+            color: black;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px 0;
+            cursor: pointer;
+        }
+
+        .cards {
+            width: 100%;
+            height: 100%;
+            gap: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: calc((100% - 30px) / 4);
+            height: calc((100% - 10px) / 2);
+            background-color: aliceblue;
+            text-align: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .location {
+            width: 100%;
+            font-size: 30px;
+            text-align: center;
+            line-height: 50px;
+            background-color: rgb(51, 63, 101);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .info {
+            width: 100%;
+            height: calc(100% - 90px - 170px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 35px;
+        }
+
+        .wx-icon {
+            font-size: 5rem;
+            margin: 40px 0 30px 0;
+            color: rgb(255, 209, 130);
+        }
+
+        .fa-temperature-three-quarters {
+            color: rgb(255, 117, 117);
+        }
+
+        .fa-umbrella {
+            color: rgb(117, 149, 255);;
+        }
+
+        .active {
+            color: rgb(85, 85, 220);
+            border-top: 1px solid rgba(49, 43, 168, 0.5);
+            border-bottom: 1px solid rgba(49, 43, 168, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+        <div class="page">
+            <nav>
+                <div class="tabs">
+                    <div class="tab active">北部</div>
+                    <div class="tab">中部</div>
+                    <div class="tab">南部</div>
+                    <div class="tab">東部</div>
+                    <div class="tab">離島</div>
+                </div>
+            </nav>
+            <main>
+                <div class="cards">
+                    <div class="card con-active">
+                        <h1 class="location">臺北市</h1>
+                        <i class="wx-icon fa-solid fa-sun"></i>
+                        <div class="info">
+                            <div class="pop">
+                                <i class="fa-solid fa-umbrella"></i>
+                                30%
+                            </div>
+                            <div class="minTmaxT">
+                                <i class="fa-solid fa-temperature-three-quarters"></i>
+                                26°C ~ 33°C
+                            </div>
+                            <div class="wx">多雲午後短暫雷陣雨</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </main>
+        </div>
+        <script>
+        fetch('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E84FEA30-5228-4B7E-9759-E1A019B23275&elementName=')
+        .then((res) => {
+            return res.json();
+        }) .then ((data) => {
+            console.log(data);
+            console.log(data.records.location);
+        })
+        </script>
+    </body>
+
+</html>

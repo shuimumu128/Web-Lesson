@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI計算</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .column-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .blue {
+            color: rgb(87, 87, 255);
+        }
+
+        .green {
+            color: rgb(52, 138, 78);
+        }
+
+        .y-g {
+            color: rgb(161, 185, 53);
+        }
+
+        .yellow {
+            color: rgb(255, 225, 55);
+        }
+
+        .orange {
+            color: rgb(255, 98, 40);
+        }
+
+        .red {
+            color: rgb(255, 44, 44);
+        }
+
+        .page {
+            width: 100%;
+            height: 100vh;
+        }
+
+        main {
+            width: 25%;
+            height: 50%;
+            gap: 20px;
+        }
+
+        .result {
+            gap: 20px;
+        }
+
+        .img {
+            width: 100%;
+        }
+
+        .img img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .result span {
+            height: 24px;
+            font-size: 24px;
+            font-weight: bold;
+            transition: 2s;
+        }
+
+        .content {
+            width: 90%;
+            font-size: 18px;
+            line-height: 34px;
+        }
+
+        input {
+            width: 60%;
+            height: 30px;
+            border: 1px solid gray;
+            color: #000;
+            border-radius: 5px;
+            text-indent: 15px;
+            font-size: 15px;
+            line-height: 30px;
+            margin-bottom: 10px;
+        }
+
+        .content button {
+            background-color: black;
+            color: white;
+            font-size: 15px;
+            line-height: 34px;
+            border-radius: 5px;
+            border: 0;
+            padding: 0 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page column-center">
+        <main class="column-center">
+            <div class="result column-center">
+                <div class="img">
+                    <img src="./img/bodysize.png" alt="">
+                </div>
+                <span class=""></span>
+            </div>
+            <div class="content column-center">
+                <div class="myValue">
+                    <div>身高：
+                        <input class="height" type="text" placeholder="頭髮並不算">
+                        cm
+                    </div>
+                    <div>體重：
+                        <input class="weight" type="text" placeholder="相信體重計">
+                        kg
+                    </div>
+
+                </div>
+                <div class="btn">
+                    <button class="submit">開始計算</button>
+                    <button class="clear">清除重算</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        var result = document.querySelector('.result span');
+        var resultImg = document.querySelector('.result img');
+        var inputH = document.querySelector('.myValue .height');
+        var inputW = document.querySelector('.myValue .weight');
+        var submit = document.querySelector('.btn .submit');
+        var clear = document.querySelector('.btn .clear');
+
+        clear.addEventListener('click', function () {
+            inputH.value = ''
+            inputW.value = ''
+            result.innerHTML = ''
+            resultImg.src = './img/bodysize.png';
+        })
+
+        submit.addEventListener('click', function () {
+            var myHeight = inputH.value / 100;
+            var myWeight = inputW.value;
+            BMI = Math.round(myWeight / (myHeight ** 2) * 10) / 10;
+            
+            if (myHeight <= 0) {
+                alert('不可思議！你比空氣還要輕盈！');
+            } else if (myHeight > 300) {
+                alert('親身經歷厘厘普遊記的感覺如何？');
+            } else if (myWeight <= 0) {
+                alert('我們只能為向上成長的人測量');
+            } else if (myWeight > 700) {
+                alert('比起算BMI還是先去醫院吧');
+            } else {
+                if (BMI < 18.5) {
+                    result.innerHTML = BMI + '，體重過輕，颱風天沒事千萬別出門';
+                    result.classList.remove("green", "y-g", "yellow", "orange", "red");
+                    result.classList.add("blue");
+                    resultImg.src = './img/blue.png';
+                }
+                
+                if (BMI >= 18.5) {
+                    result.innerHTML = BMI + '，體重正常，回去過你的快樂生活吧';
+                    result.classList.remove("blue", "y-g", "yellow", "orange", "red");
+                    result.classList.add("green");
+                    resultImg.src = './img/green.png';
+                }
+                
+                if (BMI >= 24) {
+                    result.innerHTML = BMI + '，過重，你已經跨越那條線了';
+                    result.classList.remove("blue", "green", "yellow", "orange", "red");
+                    result.classList.add("y-g");
+                    resultImg.src = './img/y-g.png';
+                }
+                
+                
+                
+                if (BMI >= 27) {
+                    result.innerHTML = BMI + '，輕度肥胖，爬三層樓會有點喘';
+                    result.classList.remove("blue", "green", "y-g", "orange", "red");
+                    result.classList.add("yellow");
+                    resultImg.src = './img/yellow.png';
+                } 
+                
+                if (BMI >= 30) {
+                    result.innerHTML = BMI + '，中度肥胖，你在危險的邊緣試探';
+                    result.classList.remove("blue", "green", "y-g", "yellow", "red");
+                    result.classList.add("orange");
+                    resultImg.src = './img/orange.png';
+                } 
+                
+                if (BMI >= 35) {
+                    result.innerHTML = BMI + '，重度肥胖，你阿嬤真的做過頭了';
+                    result.classList.remove("blue", "green", "y-g", "yellow", "orange");
+                    result.classList.add("red");
+                    resultImg.src = './img/red.png';
+                } 
+            }
+        })
+        </script>
+</body>
+
+</html>

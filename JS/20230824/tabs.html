@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .page {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+        }
+
+        nav {
+            width: 20%;
+            height: 100%;
+            background-color: rgb(41, 61, 89);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            flex: 1;
+            height: 100%;
+            background-color: rgb(29, 34, 55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tab {
+            color: white;
+            padding: 10px 0;
+            cursor: pointer;
+        }
+
+
+        .contents {
+            background-color: aliceblue;
+            width: 80%;
+            height: 80%;
+        }
+
+        .content {
+            width: 100%;
+            height: 100%;
+            /* background-image: url(https://images.squarespace-cdn.com/content/5b071ddea2772cebc1662831/1623874375983-Q02PVDKYMX9VWKFBJFLC/moon-jellyfish-ume-y.jpg?format=1500w&content-type=image%2Fjpeg);
+            background-size: cover; */
+            display: none;
+            position: relative;
+        }
+
+        .content img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .text {
+            width: 30%;
+            background-color: rgba(240, 248, 255, 0.85);
+            color: rgb(34, 35, 46);
+            line-height: 30px;
+            text-align: justify;
+            padding: 40px;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+        .active {
+            text-shadow: 0 0 3px white;
+            text-decoration: underline 3px;
+        }
+
+        .con-active {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <nav>
+            <div class="tabs">
+                <div class="tab active">Aurelia labiata</div>
+                <div class="tab">Cyanea capillata</div>
+                <div class="tab">Lampocteis cruentiventer</div>
+                <div class="tab">Stygiomedusa gigantea</div>
+                <div class="tab">Olindias formosus</div>
+            </div>
+        </nav>
+        <main>
+            <div class="contents">
+                <div class="content con-active">
+                    <img src="https://images.squarespace-cdn.com/content/5b071ddea2772cebc1662831/1623874375983-Q02PVDKYMX9VWKFBJFLC/moon-jellyfish-ume-y.jpg?format=1500w&content-type=image%2Fjpeg"
+                        alt="">
+                    <div class="text">
+                        Aurelia labiata is named for its translucent, moonlike bell. Instead of long trailing tentacles,
+                        the moon jelly has short tentacles that sweep food toward the mucous layer on the edge of the
+                        bell.
+                    </div>
+                </div>
+                <div class="content">
+                    <img src="https://ychef.files.bbci.co.uk/976x549/p01pmp6k.jpg" alt="">
+                    <div class="text">The lion's mane jellyfish (Cyanea capillata), also known as the giant jellyfish,
+                        arctic red
+                        jellyfish, or the hair jelly, is one of the largest known species of jellyfish. Its range is
+                        confined to cold, boreal waters of the Arctic, northern Atlantic, and northern Pacific
+                        Oceans.
+                        It is common in the English Channel, Irish Sea, North Sea, and in western Scandinavian
+                        waters
+                        south to Kattegat and Øresund.</div>
+                </div>
+                <div class="content">
+                    <img src="https://i0.wp.com/imageio.forbes.com/specials-images/imageserve/6257938cd972e037e64f6c3f/0x0.jpg"
+                        alt="">
+                    <div class="text">Brilliant and seemingly glowing, the bloody-belly comb jelly comes in different
+                        shades of red but always has a blood-red stomach. The sparkling display on the outside comes
+                        from light diffracting and refracting off tiny transparent, hairlike cilia. These beat
+                        continuously, propelling the jelly through the water.</div>
+                </div>
+                <div class="content">
+                    <img src="https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F211222140636-phantom-jellyfish.jpg"
+                        alt="">
+                    <div class="text">Stygiomedusa gigantea, commonly known as the giant phantom jelly, is the only
+                        species in the monotypic genus of deep sea jellyfish, Stygiomedusa. It is in the Ulmaridae
+                        family. With only around 110 sightings in 110 years, it is a jellyfish that is rarely
+                        seen, but believed to be widespread throughout the world, with the exception of the Arctic
+                        Ocean.</div>
+                </div>
+                <div class="content">
+                    <img src="https://64.media.tumblr.com/d4a7fcdb8445d7c26e381b4f9b5d1759/tumblr_nn629tT8my1qm9k25o1_1280.jpg"
+                        alt="">
+                    <div class="text">Flower hat jelly has brilliant, multicolored tentacles trailing from a
+                        translucent, pinstriped bell. It also has tentacles around the rim of its bell that it can
+                        quickly coil and uncoil. This mysterious jelly is semi-benthic, sometimes spending its time on
+                        the seafloor.</div>
+                </div>
+        </main>
+    </div>
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.content');
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                tabs.forEach((tabRemove, indexRemove) => {
+                    tabRemove.classList.remove('active');
+                    contents[indexRemove].classList.remove('con-active');
+                })
+                tab.classList.add('active');
+                contents[index].classList.add('con-active');
+            })
+        });
+    </script>
+</body>
+
+</html>
