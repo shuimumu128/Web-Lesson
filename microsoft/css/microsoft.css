@@ -19,8 +19,14 @@ ul li {
 }
 
 .container-normal {
-    width: 90%;
+    width: 92%;
     max-width: 1625px;
+}
+
+@media (max-width: 1084px) {
+    .container-normal {
+        width: 100%;
+    }
 }
 
 .flex-center {
@@ -47,6 +53,7 @@ nav {
     align-items: center;
     margin: auto;
     font-size: 13px;
+    position: relative;
 }
 
 nav .logo {
@@ -82,6 +89,10 @@ nav .function-all {
     line-height: 50px;
 }
 
+.account {
+    margin-right: 8px;
+}
+
 .account span {
     padding-right: 2px;
 }
@@ -94,8 +105,14 @@ nav .function-all {
     font-size: 16px;
 }
 
-.function .func-btn span {
+.function.func-btn {
+    position: relative;
+    z-index: 15;
+}
+
+.function.func-btn span {
     margin-right: 0px;
+    line-height: 53px;
 }
 
 .func-pc .fa-chevron-down {
@@ -104,10 +121,92 @@ nav .function-all {
 
 nav .func-menu {
     display: none;
+    width: 1230px;
+    border: 1px solid #e2e2e2;
+    border-bottom: 2px solid;
+    position: absolute;
+    z-index: 10;
+    top: 52px;
+    right: 6%;
 }
 
-.func-switch:checked~.func-btn {
+#func-switch:checked+.func-btn {
     background-color: #F2F2F2;
+    box-shadow: 0 4px #F2F2F2;
+}
+
+#func-switch:checked~.func-menu {
+    display: block;
+}
+
+.func-menu .func-cards {
+    background-color: #F2F2F2;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+}
+
+.func-menu .func-card {
+    width: 195px;
+    padding: 0;
+    margin: 0;
+    padding-left: 24px;
+}
+
+.func-card h5 {
+    margin: 0;
+    padding: 20px 0 19px 0;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.func-card li {
+    padding: 12px 0;
+    line-height: 1.5;
+}
+
+.func-menu .func-map {
+    background-color: #E6E6E6;
+    font-size: 13px;
+    line-height: 38px;
+    text-align: center;
+}
+
+@media (max-width: 1400px) {
+    nav .pc-menu li {
+        padding: 15px 11px;
+    }
+    
+    .search span, .shop span, .account span {
+        display: none;
+    }
+
+    .function.search {
+        margin: 0;
+    }
+
+    nav .func-menu {
+        right: 50%;
+        transform: translate(50%, 0%);
+    }
+}
+
+@media (max-width: 1230px) {
+    nav .func-menu {
+        width: 1025px;
+    }
+}
+
+@media (max-width: 1084px) {
+    nav {
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 1025px) {
+    nav .func-menu {
+        width: 820px;
+    }
 }
 
 .ham-small {
@@ -124,6 +223,7 @@ nav .func-menu {
     nav .func-pc,
     .function span {
         display: none;
+        
     }
     
     .page nav {
@@ -147,6 +247,16 @@ nav .func-menu {
         position: absolute;
         left: 55px;
     }
+
+    .account {
+        margin: 0;
+        padding: 0;
+        padding-left: 16px;
+    }
+
+    .shop {
+        padding: 0 16px;
+    }
 }
 
 .ham-btn {
@@ -169,6 +279,9 @@ nav .func-menu {
     width: 100%;
     padding-left: 0px;
     border-bottom:1px solid black;
+    position: absolute;
+    top: 54px;
+    margin: 0;
 }
 
 #ham-switch:checked~.mobile-menu {
@@ -207,13 +320,6 @@ nav .func-menu {
     display: block;
 }
 
-.logo:focus,
-.pc-menu li:focus,
-.function-all .function:focus,
-.mobile-menu li:focus
-{
-    border: 1px dashed #000;
-}
 
 .card-title {
     font-family: inherit;
@@ -422,6 +528,14 @@ footer {
 /* 互動類 */
 .logo, .pc-menu li, .function, .func-btn {
     cursor: pointer;
+}
+
+.logo:focus,
+.pc-menu li:focus,
+.function-all .function:focus,
+.mobile-menu li:focus
+{
+    border: 1px dashed #000;
 }
 
 .card-link:hover {
