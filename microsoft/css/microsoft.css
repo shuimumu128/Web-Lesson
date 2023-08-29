@@ -74,15 +74,16 @@ nav .function-all {
 }
 
 .function {
-    padding-right: 16px;
+    padding: 0 8px;
 }
 
 .function span {
     margin-right: 8px;
+    line-height: 50px;
 }
 
 .account span {
-    padding-right: 4px;
+    padding-right: 2px;
 }
 
 .function.search {
@@ -93,16 +94,20 @@ nav .function-all {
     font-size: 16px;
 }
 
-.function.func-btn span {
+.function .func-btn span {
     margin-right: 0px;
 }
 
-.func-btn .fa-chevron-down {
+.func-pc .fa-chevron-down {
     padding:11px 6px 0px 2px;
 }
 
 nav .func-menu {
     display: none;
+}
+
+.func-switch:checked~.func-btn {
+    background-color: #F2F2F2;
 }
 
 .ham-small {
@@ -116,7 +121,7 @@ nav .func-menu {
 @media (max-width:860px) {
     
     nav .pc-menu,
-    nav .func-btn,
+    nav .func-pc,
     .function span {
         display: none;
     }
@@ -415,7 +420,7 @@ footer {
 
 
 /* 互動類 */
-.logo, .pc-menu li, .function {
+.logo, .pc-menu li, .function, .func-btn {
     cursor: pointer;
 }
 
