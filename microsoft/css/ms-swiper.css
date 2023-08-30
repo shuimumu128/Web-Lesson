@@ -1,6 +1,5 @@
 .banner-all {
     padding: 0 5px;
-    margin-bottom: 64px;
 }
 
 .swiper {
@@ -81,7 +80,7 @@
     
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1399px) {
     .banner-card h1 {
         font-size: 30px;
         margin-bottom: 12px;
@@ -125,7 +124,7 @@ margin-right: 30px;
     font-weight: 600;
 }
 
-@media (max-width: 1084px) {
+@media (max-width: 1083px) {
     .banner-card {
         width: calc(100% - 24px);
         background-color: #fff;
@@ -154,7 +153,7 @@ margin-right: 30px;
     }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 859px) {
     .banner-card {
         width: 100%;
         margin: 0;
@@ -166,17 +165,17 @@ margin-right: 30px;
     }
     
     .swiper {
-        padding-bottom: 225px;
+        padding-bottom: 224px;
     }
 }
 
-@media (max-width: 710px) {
+@media (max-width: 709px) {
     .swiper {
         padding-bottom: 250px;
     }
 }
 
-@media (max-width: 795px) {
+@media (max-width: 794px) {
     .swiper {
         padding-bottom: 270px;
     }
