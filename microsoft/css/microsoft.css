@@ -14,6 +14,10 @@ ul li {
     list-style: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 .container-full {
     width: 100%;
 }
@@ -437,6 +441,7 @@ main {
 }
 
 @media (max-width: 543px) {
+
     .news-card,
     .business-card {
         width: 100%;
@@ -474,12 +479,12 @@ main {
 
     .edge .edge-card {
         width: calc(100% - 48px);
-        box-shadow: 0 3px 8px 0 rgba(0,0,0,.13), 0 1px 3px 0 rgba(0,0,0,.11);
+        box-shadow: 0 3px 8px 0 rgba(0, 0, 0, .13), 0 1px 3px 0 rgba(0, 0, 0, .11);
         padding: 48px;
         margin: 0 12px;
         left: calc(50% - 12px);
         bottom: 10%;
-        transform: translate( -50%, 102%);
+        transform: translate(-50%, 102%);
     }
 }
 
@@ -492,7 +497,7 @@ main {
         width: 100%;
         box-shadow: unset;
         bottom: 0;
-        transform: translate( -50%, 99%);
+        transform: translate(-50%, 99%);
         padding: 48px 24px;
     }
 }
@@ -559,10 +564,36 @@ main {
     }
 }
 
+.go-top {
+    width: 124px;
+    height: 40px;
+    background-color: #D9D9D9;
+    border-radius: 2px;
+    color: #000;
+    font-weight: 600;
+    line-height: 40px;
+    position: sticky;
+    bottom: 12px;
+    right: 12px;
+    opacity: 0;
+    transition: 0.5s;
+    margin-top: -36px;
+    margin-left: calc(100% - 12px - 124px);
+}
+
+.go-top .bi-arrow-up{
+    padding: 0 5px 0 14px;
+}
+
+.show-go-top {
+    opacity: 1;
+    transition: 0.5s;
+}
+
 footer {
     background-color: #f2f2f2;
     height: 388px;
-    margin-top: 110px;
+    margin-top: 60px;
     color: #616161;
     font-size: 11px;
 }
@@ -615,6 +646,16 @@ footer {
 
     .footer-card h4 {
         padding-top: 26px;
+    }
+}
+
+@media (max-width: 543px) {
+    footer {
+        height: unset;
+    }
+
+    .footer-card {
+        width: 100%;
     }
 }
 
@@ -671,7 +712,42 @@ footer {
 @media (max-width: 1083px) {
     .footer-nav {
         height: 140px;
+        padding: 34px 12px 24px;
+    }
+
+    .footer-nav .nation {
         flex-direction: column;
+    }
+
+    .footer-nav .nation .privacy {
+        margin: 12px 0 0 -4px;
+    }
+
+    .footer-nav .about {
+        align-items: end;
+    }
+}
+
+@media (max-width: 767px) {
+    .footer-nav {
+        height: 151px;
+        flex-direction: column;
+    }
+
+    .footer-nav .about {
+        padding: 34px 0 0 18px;
+    }
+
+    .footer-nav .about li {
+        padding-right: 13px;
+        margin: 0;
+    }
+}
+
+@media (max-width: 543px) {
+    .footer-nav .about {
+        padding-left: 12px;
+        flex-wrap: wrap;
     }
 }
 

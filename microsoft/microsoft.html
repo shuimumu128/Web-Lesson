@@ -346,6 +346,10 @@
                 <img src="./img/Facebook 2x.avif" alt="">
                 <img src="./img/YouTube 2x.webp" alt="">
             </div>
+            <a href="#" class="go-top">
+                <i class="bi bi-arrow-up"></i>
+                <span>回到頁首</span>
+            </a>
         </main>
         <footer class="container-full">
             <div class="footer-link container-normal">
@@ -454,6 +458,19 @@
                 clickable: true,
             },
         });
+
+        const goTop = document.querySelector('.go-top')
+        const main = document.querySelector('main')
+
+        console.dir(main);
+
+        window.addEventListener("scroll",() => {
+            if (window.scrollY > 330) {
+                goTop.classList.add('show-go-top')
+            } else {
+                goTop.classList.remove('show-go-top')
+            }
+        })
     </script>
 </body>
 
