@@ -15,17 +15,18 @@
         <div class="container">
             <div class="row">
                 <div v-for="item in data" class="col-md-4 col-sm-6 mb-3">
+                    <div class="position-absolute" style="top: 20px; left: 20px;">
+                        <button type="button" @click="status = !status" class="border-0 bg-white">
+                            <i v-if="!status" class="bi-toggle-off h2"></i>
+                            <i v-else class="bi bi-toggle-on h2"></i>
+                        </button>
+                    </div>
                     <div class="card">
                         <img v-if="!status" :src="item.picture.large" class="card-img-top" alt="...">
                         <img v-else :src="item.picture.thumbnail" class="card-img-top" alt="...">
-                        <div class="position-absolute" style="top: 20px; left: 20px;">
-                            <button type="button" @click="status = !status" class="btn btn-outline-light rounded-circle">
-                                <i v-if="!status" class="bi-toggle-off"></i>
-                                <i v-else class="bi bi-toggle-on"></i>
-                            </button>
-                        </div>
                         <div class="position-absolute" style="top: 20px; right: 20px;">
-                            <button type="button" @click="item.favorite = !item.favorite" class="btn btn-outline-danger rounded-circle">
+                            <button type="button" @click="item.favorite = !item.favorite"
+                                class="btn btn-outline-danger rounded-circle">
                                 <i v-if="!item.favorite" class="bi bi-heart"></i>
                                 <i v-else class="bi bi-heart-fill"></i>
                             </button>
@@ -81,22 +82,40 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
     <script src="./data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module">
         import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.esm-browser.min.js'
 
         const app = createApp({
             data() {
                 return {
-                    data: results,
-                    status: true,
+                    data: [],
+                    status: false,
                 }
             },
             methods: {
-                dateStr(birth) {
-                    return birth.substring(0, 10);
-                }
+                fetchData() {
+                    fetch('https://randomuser.me/api/?results=10')
+                        .then((res) => {
+                            return res.json();
+                        }).then((dataGet) => {
+                            this.data = dataGet.results;
+                        })
+                },
+                // axiosGet() {
+                //     axios.get('https://randomuser.me/api/?results=10')
+                //         .then((res) {
+                    // this.data = res.results;
+                //         }),
+                //     },
+
+                // dateStr(birth) {
+                //     return birth.substring(0, 10);
+                // }
             },
-            mounted() { }
+            mounted() {
+                this.fetchData();
+            }
         });
 
         app.mount('#app')

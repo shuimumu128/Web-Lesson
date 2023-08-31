@@ -467,7 +467,7 @@ main {
     line-height: 40px;
 }
 
-@media (max-width:1083px) {
+@media (max-width: 1083px) {
     .edge {
         margin: 12px auto 205px auto;
     }
@@ -483,9 +483,23 @@ main {
     }
 }
 
+@media (max-width: 859px) {
+    .edge {
+        margin: 12px auto 240px auto;
+    }
+
+    .edge .edge-card {
+        width: 100%;
+        box-shadow: unset;
+        bottom: 0;
+        transform: translate( -50%, 99%);
+        padding: 48px 24px;
+    }
+}
+
 @media (max-width: 543px) {
     .edge {
-        margin: 0px auto 30px auto;
+        margin: 0px auto 270px auto;
     }
 }
 
@@ -519,6 +533,7 @@ main {
 
 .follow {
     justify-content: flex-start;
+    flex-wrap: wrap;
     margin: auto;
 }
 
@@ -530,6 +545,18 @@ main {
     width: 32px;
     height: 32px;
     margin-left: 16px;
+}
+
+@media (max-width: 1083px) {
+    .follow {
+        margin-top: -48px;
+    }
+}
+
+@media (max-width: 543px) {
+    .follow {
+        margin-top: -24px;
+    }
 }
 
 footer {
@@ -561,13 +588,34 @@ footer {
     padding: 0;
 }
 
-
 .footer-card h4 {
     margin: 0;
     font-size: 15px;
     line-height: 20px;
     font-weight: 600;
     padding-bottom: 4px;
+}
+
+@media (max-width: 1083px) {
+    footer {
+        height: 772px;
+    }
+
+    .footer-link {
+        padding: 0px 12px 0 12px;
+    }
+
+    .footer-card {
+        width: calc(100% / 3);
+    }
+
+    .first-card {
+        padding: 0 12px;
+    }
+
+    .footer-card h4 {
+        padding-top: 26px;
+    }
 }
 
 .footer-nav {
@@ -620,6 +668,12 @@ footer {
     margin: 0;
 }
 
+@media (max-width: 1083px) {
+    .footer-nav {
+        height: 140px;
+        flex-direction: column;
+    }
+}
 
 /* 互動類 */
 .logo,
