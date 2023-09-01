@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>Weather</title>
+</head>
+
+<body class="p-0">
+    <div id="app">
+        <div class="row w-100 vh-100">
+            <ul class="nav nav-underline col-2 d-flex flex-column align-items-center bg-body-secondary">
+                <li class="nav-item">
+                    <button class="nav-link" :class="{ active:isActive ==='all' }"
+                        @click="isActive ='all', changeArea(0)">全部</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" :class="{ active:isActive ==='north' }"
+                        @click="isActive ='north', changeArea(1)">北部</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" :class="{ active:isActive ==='middle' }"
+                        @click="isActive ='middle', changeArea(2)">中部</button>
+                </li>
+            </ul>
+            <div class="tab-content col-10 bg-body-tertiary">
+                <div class="tab-pane fade show active">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4 p-3">
+                                <img src="https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/01.svg"
+                                    class="img-fluid rounded-start w-100" alt="晴天">
+                            </div>
+                            <div class="col-md-8 row">
+                                <div class="card-body col-9">
+                                    <h5 class="card-title">基隆市</h5>
+                                    <p class="card-text">This is a wider card with supporting text below as a natural
+                                        lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">
+                                        <small class="text-body-secondary">
+                                            2023-09-01 18:00 起六小時</small>
+                                    </p>
+                                </div>
+                                <div class="card-body col-3 ps-0">
+                                    <h1 class="">34°</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-for="(item, index) in nowCity" :key="index">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script type="module">
+        import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.esm-browser.min.js'
+
+        const app = createApp({
+            data() {
+                return {
+                    orgData: [],
+                    cityAll: [
+                        ['基隆市', '新北市', '臺北市', '桃園市', '新竹市', '新竹縣', '宜蘭縣', '苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣', '嘉義市', '嘉義縣', '臺南市', '高雄市', '屏東縣', '澎湖縣', '花蓮縣', '臺東縣', '金門縣', '連江縣'],
+                        ['基隆市', '新北市', '臺北市', '桃園市', '新竹市', '新竹縣', '宜蘭縣'],
+                        ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣'],
+                        ['嘉義市', '嘉義縣', '臺南市', '高雄市', '屏東縣', '澎湖縣'],
+                        ['花蓮縣', '臺東縣']
+                        ['金門縣', '連江縣']
+                    ],
+                    isActive: 'all',
+                }
+            },
+            methods: {
+                fetchData() {
+                    fetch('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E84FEA30-5228-4B7E-9759-E1A019B23275&elementName=')
+                    .then((res) => {
+                        return res.json();
+                    }).then((data) => {
+                        this.organizationData(data);
+                        console.log(this.orgData);
+                    })
+                },
+
+                organizationData(data) {
+                    let locationAll = data.records.location;
+                    locationAll.forEach((location, index) => {
+                        let locationName = location.locationName
+                        let startTime = location.weatherElement[0].time[2].startTime
+                        let endTime = location.weatherElement[0].time[2].endTime
+                        let wx = location.weatherElement[0].time[2].parameter.parameterName
+                        let pop = location.weatherElement[1].time[2].parameter.parameterName
+                        let MinT = location.weatherElement[2].time[2].parameter.parameterName
+                        let CI = location.weatherElement[3].time[2].parameter.parameterName
+                        let MaxT = location.weatherElement[4].time[2].parameter.parameterName
+                        
+                        //array[key] = 值，可直接更改array內此key的值，若無則直接增加
+                        this.orgData[locationName] = {
+                            'startTime': startTime,
+                            'endTime': endTime,
+                            'wx': wx,
+                            'pop': pop,
+                            'MinT': MinT,
+                            'CI': CI,
+                            'MaxT': MaxT,
+                        }
+                    });
+                },
+
+                changeArea(index) {
+                    this.nowCity = this.cityAll[index];
+                },
+            },
+            mounted() {
+                this.fetchData();
+            }
+        });
+
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

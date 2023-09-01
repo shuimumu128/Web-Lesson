@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app" class="vh-100 d-flex justify-content-center align-items-center">
+        <div class="container row w-50">
+            <div class="row col-7">
+                <div class="col-6">
+                    <label for="num1" class="form-label">第一個數字</label>
+                    <input type="number" id="num1" v-model="numA" class="form-control" placeholder="請輸入第一個數字">
+                </div>
+                <div class="col-6">
+                    <label for="num2" class="form-label">第二個數字</label>
+                    <input type="number" id="num2" v-model="numB" class="form-control" placeholder="請輸入第二個數字">
+                </div>
+                <div class="col-12">
+                    <div class="btn-group w-100 mt-3">
+                        <button type="button" class="btn btn-secondary btn-outline-light"
+                            @click="operator = '+'">+</button>
+                        <button type="button" class="btn btn-secondary btn-outline-light"
+                            @click="operator = '-'">-</button>
+                        <button type="button" class="btn btn-secondary btn-outline-light"
+                            @click="operator = 'x'">x</button>
+                        <button type="button" class="btn btn-secondary btn-outline-light"
+                            @click="operator = '÷'">÷</button>
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-outline-light w-100"
+                        @click="calcResult">開始計算</button>
+                    <h5 class="w-100 mt-3">結果：{{ resultNum }}</h5>
+                </div>
+            </div>
+            <div class="col-5">
+                <h5>歷史紀錄：</h5>
+                <li v-for="(item, index) in history" :key="index">
+                    {{ item }}
+                </li>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        numA: '',
+                        numB: '',
+                        operator: '+',
+                        resultNum: '',
+                        history: [],
+                    }
+                },
+                methods: {
+                    calcResult() {
+                        switch (this.operator) {
+                            case '+':
+                                this.resultNum = this.numA + this.numB;
+                                break;
+                            case '-':
+                                this.resultNum = this.numA - this.numB;
+                                break;
+                            case 'x':
+                                this.resultNum = this.numA * this.numB;
+                                break;
+                            case '÷':
+                                this.resultNum = this.numA / this.numB;
+                                break;
+                            default:
+                                break;
+                        };
+                        this.addHitory();
+                    },
+
+                    addHitory() {
+                        this.history.push(`${this.numA} ${this.operator} ${this.numB} = ${this.resultNum}`);
+                        this.numA = '';
+                        this.numB = '';
+                        this.operator = '+'
+                    }
+
+                },
+                mounted() { }
+            });
+            app.mount('#app')
+        </script>
+</body>
+
+</html>
