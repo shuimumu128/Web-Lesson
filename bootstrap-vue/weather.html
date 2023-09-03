@@ -7,13 +7,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Weather</title>
+    <style>
+        .active {
+            display: flex !important;
+        }
+
+        .nav {
+            background-color: rgb(132, 150, 184);
+        }
+
+        .nav-link {
+            font-size: 20px;
+            color: rgb(53, 62, 104);
+        }
+
+        .tab-content {
+            background-color: rgb(43, 62, 87);
+        }
+
+        .card {
+            background-color: rgb(50, 92, 146);
+            color: rgb(230, 238, 245);
+        }
+    </style>
 </head>
 
 <body class="p-0">
     <div id="app">
-        <div class="row w-100 vh-100">
-            <ul class="nav nav-underline col-2 d-flex flex-column align-items-center bg-body-secondary">
+        <div class="row flex-row-reverse w-100 vh-100 m-0">
+            <ul
+                class="nav nav-underline col-1 fixed-top h-100 d-flex flex-column align-items-center justify-content-center">
                 <li class="nav-item">
                     <button class="nav-link" :class="{ active:isActive ==='all' }"
                         @click="isActive ='all', changeArea(0)">全部</button>
@@ -26,33 +53,56 @@
                     <button class="nav-link" :class="{ active:isActive ==='middle' }"
                         @click="isActive ='middle', changeArea(2)">中部</button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" :class="{ active:isActive ==='south' }"
+                        @click="isActive ='south', changeArea(3)">南部</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" :class="{ active:isActive ==='east' }"
+                        @click="isActive ='east', changeArea(4)">東部</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" :class="{ active:isActive ==='outlying' }"
+                        @click="isActive ='outlying', changeArea(5)">外島</button>
+                </li>
             </ul>
-            <div class="tab-content col-10 bg-body-tertiary">
-                <div class="tab-pane fade show active">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
+            <div class="tab-content col-11">
+                <div class="tab-pane fade show active row justify-content-center py-5">
+                    <div v-for="(item, index) in nowCity" :key="index" class="card mb-3 mx-2 pt-2 col-4 border-0"
+                        style="width: 510px;">
+                        <div class="row px-2">
                             <div class="col-md-4 p-3">
-                                <img src="https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/01.svg"
-                                    class="img-fluid rounded-start w-100" alt="晴天">
+                                <img :src="wxImg(item)"
+                                    class="img-fluid rounded-start w-100 pt-2" alt="">
                             </div>
-                            <div class="col-md-8 row">
-                                <div class="card-body col-9">
-                                    <h5 class="card-title">基隆市</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural
-                                        lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text">
-                                        <small class="text-body-secondary">
-                                            2023-09-01 18:00 起六小時</small>
-                                    </p>
+                            <div class="col-md-8 row pe-0">
+                                <div class="card-body col-8">
+                                    <h4 class="card-title fw-bolder">▍{{ item }}</h4>
+                                    <ul class="card-text list-unstyled pt-1 ps-1">
+                                        <li>
+                                            <i class="fa-solid fa-umbrella"></i>
+                                            <span class="p-2">{{ orgData[item].pop }}%</span>
+                                        </li>
+                                        <li>
+                                            <i class="fa-solid fa-person p-1"></i>
+                                            <span class="p-2">{{ orgData[item].CI }}</span>
+                                        </li>
+                                        <li>
+                                            <i class="fa-solid fa-sun" style="padding-left: 2px;"></i>
+                                            <span class="p-2">{{ orgData[item].wx }}</span>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="card-body col-3 ps-0">
-                                    <h1 class="">34°</h1>
+                                <div class="card-body col-4 px-0">
+                                    <h1 class="fw-bold" style="font-size: 66px;">{{ orgData[item].T }}°</h1>
+                                    <div class="ps-1">{{ orgData[item].MinT }}° - {{ orgData[item].MaxT }}°</div>
                                 </div>
+                                <p class="card-text pb-3" style="padding-left: 21px;">
+                                    <small class="text-white-50">
+                                        {{orgData[item].startTime}} - {{orgData[item].endTime}}</small>
+                                </p>
                             </div>
                         </div>
-                    </div>
-                    <div v-for="(item, index) in nowCity" :key="index">
-
                     </div>
                 </div>
             </div>
@@ -68,13 +118,14 @@
             data() {
                 return {
                     orgData: [],
+                    nowCity: [],
                     cityAll: [
                         ['基隆市', '新北市', '臺北市', '桃園市', '新竹市', '新竹縣', '宜蘭縣', '苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣', '嘉義市', '嘉義縣', '臺南市', '高雄市', '屏東縣', '澎湖縣', '花蓮縣', '臺東縣', '金門縣', '連江縣'],
                         ['基隆市', '新北市', '臺北市', '桃園市', '新竹市', '新竹縣', '宜蘭縣'],
                         ['苗栗縣', '臺中市', '彰化縣', '南投縣', '雲林縣'],
                         ['嘉義市', '嘉義縣', '臺南市', '高雄市', '屏東縣', '澎湖縣'],
-                        ['花蓮縣', '臺東縣']
-                        ['金門縣', '連江縣']
+                        ['花蓮縣', '臺東縣'],
+                        ['金門縣', '連江縣'],
                     ],
                     isActive: 'all',
                 }
@@ -82,35 +133,39 @@
             methods: {
                 fetchData() {
                     fetch('https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-E84FEA30-5228-4B7E-9759-E1A019B23275&elementName=')
-                    .then((res) => {
-                        return res.json();
-                    }).then((data) => {
-                        this.organizationData(data);
-                        console.log(this.orgData);
-                    })
+                        .then((res) => {
+                            return res.json();
+                        }).then((data) => {
+                            this.organizationData(data);
+                            this.changeArea(0);
+                        })
                 },
 
                 organizationData(data) {
                     let locationAll = data.records.location;
                     locationAll.forEach((location, index) => {
-                        let locationName = location.locationName
-                        let startTime = location.weatherElement[0].time[2].startTime
-                        let endTime = location.weatherElement[0].time[2].endTime
-                        let wx = location.weatherElement[0].time[2].parameter.parameterName
-                        let pop = location.weatherElement[1].time[2].parameter.parameterName
-                        let MinT = location.weatherElement[2].time[2].parameter.parameterName
-                        let CI = location.weatherElement[3].time[2].parameter.parameterName
-                        let MaxT = location.weatherElement[4].time[2].parameter.parameterName
-                        
+                        let locationName = location.locationName;
+                        let startTime = location.weatherElement[0].time[2].startTime.substring(0, 16);
+                        let endTime = location.weatherElement[0].time[2].endTime.substring(0, 16);
+                        let wx = location.weatherElement[0].time[2].parameter.parameterName;
+                        let wxV = location.weatherElement[0].time[2].parameter.parameterValue;
+                        let pop = location.weatherElement[1].time[2].parameter.parameterName;
+                        let MinT = location.weatherElement[2].time[2].parameter.parameterName;
+                        let CI = location.weatherElement[3].time[2].parameter.parameterName;
+                        let MaxT = location.weatherElement[4].time[2].parameter.parameterName;
+                        let T = parseInt((parseInt(MinT) + parseInt(MaxT)) / 2);
+
                         //array[key] = 值，可直接更改array內此key的值，若無則直接增加
                         this.orgData[locationName] = {
                             'startTime': startTime,
                             'endTime': endTime,
                             'wx': wx,
+                            'wxV': wxV,
                             'pop': pop,
                             'MinT': MinT,
                             'CI': CI,
                             'MaxT': MaxT,
+                            "T": T,
                         }
                     });
                 },
@@ -118,6 +173,30 @@
                 changeArea(index) {
                     this.nowCity = this.cityAll[index];
                 },
+
+                wxImg(name) {
+                    if (this.orgData[name].wxV == 1) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/01.svg';
+                    } else if (this.orgData[name].wxV == 2) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/02.svg';
+                    } else if (this.orgData[name].wxV == 3) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/03.svg';
+                    } else if (this.orgData[name].wxV == 4) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/04.svg';
+                    } else if (this.orgData[name].wxV == 5) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/05.svg';
+                    } else if (this.orgData[name].wxV == 6) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/06.svg';
+                    } else if (this.orgData[name].wxV == 7) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/07.svg';
+                    } else if (this.orgData[name].wxV == 8) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/08.svg';
+                    } else if (this.orgData[name].wxV == 9) {
+                        return 'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/09.svg';
+                    } else {
+                        return `https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/${this.orgData[name].wxV}.svg`
+                    }
+                }
             },
             mounted() {
                 this.fetchData();
