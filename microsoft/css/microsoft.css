@@ -158,18 +158,17 @@ nav .func-menu {
     width: 195px;
     padding: 0;
     margin: 0;
-    padding-left: 24px;
 }
 
 .func-card h5 {
     margin: 0;
-    padding: 20px 0 19px 0;
+    padding: 20px 0 19px 24px;
     font-weight: 600;
     font-size: 13px;
 }
 
 .func-card li {
-    padding: 12px 0;
+    padding: 12px 0 12px 24px;
     line-height: 1.5;
 }
 
@@ -178,6 +177,10 @@ nav .func-menu {
     font-size: 13px;
     line-height: 38px;
     text-align: center;
+}
+
+.func-map span {
+    padding: 8px 80px 9px 90px;
 }
 
 @media (max-width: 1399px) {
@@ -752,20 +755,37 @@ footer {
 }
 
 /* 互動類 */
-.logo,
-.pc-menu li,
-.function,
-.func-btn {
+.logo, .pc-menu li, .function, .func-btn,
+.func-menu li, .func-map {
     cursor: pointer;
+}
+
+.func-menu ul {
+    cursor: default;
+}
+
+.pc-menu li:hover,
+.function:hover span,
+.func-btn span:hover {
+    text-decoration: 2px underline;
+    text-underline-offset: 7px;
+}
+
+.account:hover span {
+    text-decoration: none;
 }
 
 .logo:focus,
 .pc-menu li:focus,
 .function-all .function:focus,
-.mobile-menu li:focus {
+.mobile-menu li:focus,
+.func-menu li:focus,
+.func-map span:focus {
     border: 1px dashed #000;
 }
 
-.card-link:hover {
+.card-link:hover,
+.func-menu li:hover,
+.func-map:hover {
     text-decoration: underline;
 }
