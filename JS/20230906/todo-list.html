@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" class="input">
+    <button type="button" class="addBtn">增加項目</button>
+    <button type="button" class="clearBtn">清除內容</button>
+    <ul class="todoList"></ul>
+    <input type="text" class="editInput">
+    <button type="button" class="confirmBtn">確認修改</button>
+    <button type="button" class="cancleBtn">取消</button>
+    <script>
+        const input = document.querySelector('.input');
+        const addBtn = document.querySelector('.addBtn');
+        const clearBtn = document.querySelector('.clearBtn');
+        const todoList = document.querySelector('.todoList')
+        let list = []
+        console.dir(input);
+
+        addBtn.addEventListener('click', () => {
+            if (input.value.trim() == '') {
+                alert('項目不可為空')
+            } else {
+                list.push({
+                    // id: id++,
+                    text: input.value
+                });
+                todoList.innerHTML = '';
+                updateList();
+                input.value = '';
+            }
+            console.log(list);
+        })
+        
+        function updateList() {    
+            list.forEach((li, index) => {
+                todoList.innerHTML += `
+                <li deta-num="${index}>${li.text}
+                <button type="button" class="editBtn"">編輯</button>
+                <button type="button" class="delBtn">刪除</button>
+                </li>`
+            });
+        }
+        
+        const editBtn = document.querySelector('.editBtn');
+        const delBtn = document.querySelector('.delBtn');
+        const editInput = document.querySelector('.editInput');
+        const confirmBtn = document.querySelector('.confirmBtn');
+        const cancleBtn = document.querySelector('.cancleBtn');
+
+        editBtn.addEventListener('click', (item) => {
+            let detaNum = ;
+            
+        })
+    </script>
+</body>
+
+</html>
