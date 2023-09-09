@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" class="input">
+    <button type="button" class="addBtn">增加項目</button>
+    <button type="button" class="clearBtn">清除內容</button>
+    <ul class="todoList"></ul>
+    <input type="text" class="editInput">
+    <button type="button" class="confirmBtn">確認修改</button>
+    <button type="button" class="cancleBtn">取消</button>
+    <script>
+        const input = document.querySelector('.input');
+        const addBtn = document.querySelector('.addBtn');
+        const clearBtn = document.querySelector('.clearBtn');
+        const todoList = document.querySelector('.todoList')
+
+        const editInput = document.querySelector('.editInput');
+        const confirmBtn = document.querySelector('.confirmBtn');
+        const cancleBtn = document.querySelector('.cancleBtn');
+
+        let editBtn = document.querySelectorAll('.editBtn');
+        let delBtn = document.querySelectorAll('.delBtn');
+
+        let list = [];
+        //設temp暫存欲修改項目編號
+        let temp = '';
+
+        addBtn.addEventListener('click', () => { addList() });
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
+        });
+
+        confirmBtn.addEventListener('click', () => { editConfirm() });
+        cancleBtn.addEventListener('click', () => {
+            editInput.value = '';
+            temp = '';
+        });
+
+
+        function addList() {
+            if (input.value.trim() == '') {
+                alert('項目不可為空')
+                return;
+            } else {
+                list.push(input.value);
+                updateList();
+                input.value = '';
+            }
+        };
+
+        function updateList() {
+            todoList.innerHTML = '';
+            //設dataset下項目num為list陣列編號
+            list.forEach((li, index) => {
+                todoList.innerHTML += `
+                <li>${li}
+                <button type="button" class="editBtn" data-num=${index}>編輯</button>
+                <button type="button" class="delBtn"  data-num=${index}>刪除</button>
+                </li>`
+            });
+
+            //重綁變數後呼叫監聽事件
+            editBtn = document.querySelectorAll('.editBtn');
+            delBtn = document.querySelectorAll('.delBtn');
+            editGo(editBtn);
+            delList(delBtn);
+
+            //清單變動後清空編輯，需重新選擇想編輯的項目
+            editInput.value = '';
+            temp = '';
+        };
+
+        function delList(e) {
+            e.forEach((del, index) => {
+                del.addEventListener('click', () => {
+                    //在陣列中刪掉被點擊刪除的項目(以dataset.num=index來處理)
+                    list.splice(del.dataset.num, 1);
+                    updateList();
+                })
+            })
+        };
+
+        function editGo(e) {
+            e.forEach((edit, index) => {
+                edit.addEventListener('click', () => {
+                    editInput.value = list[edit.dataset.num];
+                    //暫存被點擊修改的項目編號
+                    temp = edit.dataset.num;
+                })
+            })
+        };
+
+        function editConfirm() {
+            if (editInput.value.trim() == '') {
+                alert('項目不可為空')
+                return;
+            } else if (temp == '') {
+                alert('請選擇編輯項目')
+            } else {
+                //使用暫存(最後點擊的編輯鈕項目編號)回傳更改清單內容
+                list[temp] = editInput.value;
+                updateList();
+            }
+        }
+    </script>
+</body>
+
+</html>
