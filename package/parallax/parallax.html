@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="icon" href="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/cc13c58ba4b8aa477b01d99289faa968.ico"
+        type="image/x-icon" />
+    <title>Tears of the Kingdom</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 20;
+        }
+
+        .nav-link {
+            color: rgb(163, 248, 234);
+        }
+
+        .nav-link:hover {
+            color: aliceblue;
+            text-shadow: 0 0 5px white;
+        }
+
+        .banner {
+            height: calc(100vh - 66px);
+            background-image: url(https://www.cnet.com/a/img/resize/975719fbb4242f346c0db05e044608b2dcf7cddc/hub/2022/09/13/fc6f151c-93b1-471c-97ea-a76c44e30235/switch-tloz-totk-artwork-01.jpg?auto=webp&fit=crop&height=675&width=1200);
+            background-size: cover;
+            margin-top: 66px;
+        }
+
+        .banner-icon {
+            width: 30%;
+        }
+
+        .parallax-window {
+            min-height: 600px;
+            background: transparent;
+        }
+
+        .content {
+            width: 400px;
+            height: 300px;
+            background-color: rgba(47, 79, 79, 0.8);
+            color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon/cc13c58ba4b8aa477b01d99289faa968.ico"
+                    width="40" height="40" class="object-fit-cover">
+            </a>
+            <button class="navbar-toggler" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sky Islands</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hyrule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">The Depths</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="banner container-fluid d-flex align-items-center">
+        <div class="banner-icon ms-5" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
+            <img src="https://zelda.nintendo.com/tears-of-the-kingdom/_images/game/logo-shadow.png" alt="">
+        </div>
+    </div>
+    <div class="container-fluid d-flex justify-content-center align-items-center"
+        style="height: 400px; background-color: rgb(248, 248, 248);">
+        <div class="card-text" data-aos="fade-up" data-aos-offset="100" data-aos-easing="ease-in-sine">
+            城堡漂浮到空中，神秘的遺跡從天而降。
+            <br>
+            海拉魯遭遇了突如其來的「天地異變」。
+            <br>
+            主角林克再次投身於無盡的冒險之中。
+        </div>
+    </div>
+    <div class="parallax-window d-flex justify-content-end align-items-center overflow-hidden" data-parallax="scroll"
+        data-image-src="https://www.nintendo.tw/topics/article/article_img/a_230209_08/1.jpg">
+        <div class="content d-flex justify-content-center align-items-center me-5" data-aos="fade-left"
+            data-aos-offset="100" data-aos-easing="ease-in-sine">
+            <div class="card-text">
+                漂浮在天空的島嶼。
+                <br>
+                全新的古老文明與生態系。
+                <br>
+                盡情地享受翱翔的樂趣。
+            </div>
+        </div>
+    </div>
+    <div class="parallax-window d-flex justify-content-start align-items-center overflow-hidden" data-parallax="scroll"
+        data-image-src="https://news.northeastern.edu/wp-content/uploads/2023/06/Zelda1400.jpg">
+        <div class="content d-flex justify-content-center align-items-center ms-5" data-aos="fade-right"
+            data-aos-offset="100" data-aos-easing="ease-in-sine">
+            <div class=" card-text">
+                海拉魯王國再次陷入危機。
+                <br>
+                詭異的瘴氣從地面竄出。
+                <br>
+                洞窟鰻藏的是寶藏抑或是其他？
+            </div>
+        </div>
+    </div>
+    <div class="parallax-window d-flex justify-content-end align-items-center overflow-hidden" data-parallax="scroll"
+        data-image-src="https://www.pcinvasion.com/wp-content/uploads/2023/05/Can-You-Replay-Boss-Fights-in-Zelda-Tears-of-the-Kingdom-location-depths.jpg?fit=1200%2C675">
+        <div class="content d-flex justify-content-center align-items-center me-5" data-aos="fade-left"
+            data-aos-offset="100" data-aos-easing="ease-in-sine">
+            <div class="card-text">
+                忽然出現的巨大深穴。
+                <br>
+                伸手不見五指的黑暗地底。
+                <br>
+                從鮮紅的入口一躍而下吧！
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/parallax.js/1.4.2/parallax.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
