@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="searchInput">
+        <button type="button" @click="searchList">搜尋</button>
+        <hr>
+        <input type="text" v-model="addInput">
+        <button type="button" @click="addList">增加項目</button>
+        <ul>
+            <li v-for="item in listShow" :key="item.id">
+                {{ item.text }}
+                <button @click="editFunc(item)">編輯</button>
+                <button @click="delFunc(item)">刪除</button>
+            </li>
+        </ul>
+        <input type="text" v-model="temp.text">
+        <button type="button" @click="editConfirm">確認修改</button>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    list: [],
+                    listShow: [],
+                    idAll: 0,
+                    searchInput: '',
+                    addInput: '',
+                    temp: {},
+                }
+            },
+            methods: {
+                searchList() {
+                    const searchSureInput = this.searchInput.trim();
+                    if (searchSureInput) {
+                        this.listShow = this.list.filter(item => item.text.includes(searchSureInput));
+                        this.searchInput = '';
+                    } else {
+                        this.listShow = [...this.list];
+                    }
+                },
+
+                addList() {
+                    if (this.addInput.trim()) {
+                        this.idAll++;
+                        let listItem = {
+                            id: this.idAll,
+                            text: this.addInput,
+                        };
+                        this.list.push(listItem);
+                        this.addInput = '';
+                        this.searchList();                   
+                    } else {
+                        alert('項目不可為空')
+                        return;
+                    }
+                },
+
+                delFunc(e) {
+                    const delIndex = this.list.findIndex(obj => obj.id === e.id);
+                    this.list.splice(delIndex, 1);
+                    this.searchList();
+                },
+
+                editFunc(e) {
+                    this.temp = { ...e };
+                },
+
+                editConfirm() {
+                    const editIndex = this.list.findIndex(obj => obj.id === this.temp.id);
+                    if (this.temp.text.trim() == '') {
+                        alert('項目不可為空')
+                        return;
+                    } else if (JSON.stringify(this.temp) == '{}') {
+                        alert('請選擇編輯項目')
+                        return;
+                    } else {
+                        this.list[editIndex] = this.temp;
+                        this.temp = {};
+                        this.searchList();
+                    }
+                },
+            },
+            mounted() { }
+        });
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

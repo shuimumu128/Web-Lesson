@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" class="searchInput">
+    <button type="button" class="searchBtn">搜尋</button>
+    <hr>
+    <input type="text" class="input">
+    <button type="button" class="addBtn">增加項目</button>
+    <button type="button" class="clearBtn">清除內容</button>
+    <ul class="todoList"></ul>
+    <input type="text" class="editInput">
+    <button type="button" class="confirmBtn">確認修改</button>
+    <button type="button" class="cancleBtn">取消修改</button>
+    <script>
+        // ============================================================
+        // 宣告區
+        // ============================================================
+        const searchInput = document.querySelector('.searchInput')
+        const searchBtn = document.querySelector('.searchBtn')
+
+        const input = document.querySelector('.input');
+        const addBtn = document.querySelector('.addBtn');
+        const clearBtn = document.querySelector('.clearBtn');
+        const todoList = document.querySelector('.todoList')
+
+        const editInput = document.querySelector('.editInput');
+        const confirmBtn = document.querySelector('.confirmBtn');
+        const cancleBtn = document.querySelector('.cancleBtn');
+
+        let editBtn = document.querySelectorAll('.editBtn');
+        let delBtn = document.querySelectorAll('.delBtn');
+
+        let list = [];
+        let listShow = [];
+        // 設id項目從0開始，第一個項目會分配到id:1
+        let idAll = 0;
+        // 設temp暫存欲修改項目內容(含id,text)
+        let temp = {};
+
+        // ============================================================
+        // 主程式區
+        // ============================================================
+
+        searchFunc()
+        addFunc();
+        clearFunc();
+        confirmFunc();
+        cancleFunc();
+
+        // ------------------------------------------------------------
+        // 監聽事件區
+        // ------------------------------------------------------------
+
+        function searchFunc() {
+            searchBtn.addEventListener('click', () => {
+                show();
+            });
+
+        }
+        
+        function addFunc() {
+            addBtn.addEventListener('click', () => { addList() });
+        }
+
+        function clearFunc() {
+            clearBtn.addEventListener('click', () => {
+                input.value = '';
+            });
+        }
+
+        function confirmFunc() {
+            confirmBtn.addEventListener('click', () => { editConfirm() });
+        }
+
+        function cancleFunc() {
+            cancleBtn.addEventListener('click', () => {
+                editInput.value = '';
+                temp = {};
+            });
+        }
+
+        function delList(e) {
+            e.forEach((del, index) => {
+                del.addEventListener('click', () => { delFunc(listShow[index]) })
+            })
+        };
+
+        function editGo(e) {
+            e.forEach((edit, index) => {
+                edit.addEventListener('click', () => { editFunc(listShow[index]) })
+            })
+        };
+
+        // ------------------------------------------------------------
+        // 細項函式區
+        // ------------------------------------------------------------
+        function updateList() {
+            todoList.innerHTML = '';
+            listShow.forEach((li, index) => {
+                todoList.innerHTML += `
+            <li>${li.text}
+                <button type="button" class="editBtn">編輯</button>
+                <button type="button" class="delBtn">刪除</button>
+                </li>`
+            });
+
+            //重綁變數後呼叫監聽事件
+            editBtn = document.querySelectorAll('.editBtn');
+            delBtn = document.querySelectorAll('.delBtn');
+            editGo(editBtn);
+            delList(delBtn);
+        };
+
+        function searchList() {
+            const searchSureInput = searchInput.value.trim();
+            if (searchSureInput) {
+                listShow = list.filter(item => item.text.includes(searchSureInput));
+                searchInput.value = '';
+            } else {
+                listShow = [...list];
+            }
+        }
+
+        function show() {
+            searchList();
+            updateList();
+        }
+
+        function addList() {
+            if (input.value.trim() == '') {
+                alert('項目不可為空')
+                return;
+            } else {
+                // 每新增一次項目id+1,id不會重複
+                idAll++;
+                listItem = {
+                    id: idAll,
+                    text: input.value,
+                };
+                list.push(listItem);
+                show();
+                input.value = '';
+            }
+        };
+
+        function delFunc(e) {
+            const delIndex = list.findIndex(obj => obj.id === e.id);
+            list.splice(delIndex, 1);
+            show();
+        };
+
+        function editFunc(e) {
+            editInput.value = e.text;
+            // 暫存被點擊修改的項目內容
+            temp = { ...e };
+        };
+        
+        function editConfirm() {
+            // 比對暫存的項目id和資料內相符，取那筆資料的序列設為變數
+            const editIndex = list.findIndex(obj => obj.id === temp.id);
+            if (editInput.value.trim() == '') {
+                alert('項目不可為空')
+                return;
+            } else if (JSON.stringify(temp) == '{}') {
+                alert('請選擇編輯項目')
+                return;
+            } else {
+                //更改暫存text並將暫存回傳更改清單內容
+                temp.text = editInput.value;
+                list[editIndex] = temp;
+                show();
+                editInput.value = '';
+                temp = {};
+            }
+        };
+    </script>
+</body>
+
+</html>
