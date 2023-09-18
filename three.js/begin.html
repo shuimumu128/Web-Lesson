@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+
+    <!-- <version>須改為版本，可用latest找最新版 -->
+    <script type="importmap">
+        {
+        "imports": {
+            "three": "https://unpkg.com/three@latest/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@latest/examples/jsm/"
+        }
+        }
+    </script>
+
+    <script type="module">
+
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        // 新增場景
+        const scene = new THREE.Scene();
+        // 新增攝影機
+        // (fov(視野角度), 長寬比, 最近, 最遠)
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // 新增渲染器
+        const renderer = new THREE.WebGLRenderer();
+        // 設置render畫面尺寸
+        // 可用將第三個參數(updateStyle)設成false調整解析度
+        // Ex: <canvas>設置寬高100%，setSize(window.innerWidth/2, window.innerHeight/2, false) = 解析度減半
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        // 將<canvas>加入HTML
+        document.body.appendChild(renderer.domElement);
+
+        // 新增控制器
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+        // 新增模型(BoxGeometry立方體)
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        // 新增材質
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        // 新增模型表面(模型變數, 材質)
+        const cube = new THREE.Mesh(geometry, material);
+        // 加入場景
+        scene.add(cube);
+
+        // 設置攝影機位置
+        // camera.position.set(x, y, z)
+        camera.position.z = 5;
+
+        // 設置render loop(animate loop)
+        function animate() {
+            // 依螢幕更新率繪製畫面
+            // 當切換至其他分頁時會暫停刷新
+            // 有希望持續循環的動畫可加在這(會每幀執行一次)
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+
+</html>

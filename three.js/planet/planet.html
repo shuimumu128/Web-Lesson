@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: url(./img/2k_stars_milky_way.jpg) no-repeat center center;
+            background-size: cover;
+            color: #ff9e86;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <img src="./img/2k_earth_daymap.jpg" alt=""> -->
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+        "imports": {
+            "three": "https://unpkg.com/three@latest/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@latest/examples/jsm/"
+        }
+        }
+    </script>
+
+    <script type="module">
+
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        // 新增場景
+        const scene = new THREE.Scene();
+        // 新增攝影機
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // 新增渲染器
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 新增控制器
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+        // 設置環境光 AmbientLight
+        let ambientLight = new THREE.AmbientLight(0xeeffff, 0.1)
+        scene.add(ambientLight)
+        // 設置點光源 PointLight
+        let pointLight = new THREE.PointLight('white', 300)
+        scene.add(pointLight)
+        const sphereSize = 7;
+        let pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize)
+        scene.add(pointLightHelper)
+
+        // 新增模型
+        const sunGeometry = new THREE.SphereGeometry(5, 32, 16);
+        const earthGeometry = new THREE.SphereGeometry(1, 32, 16);
+
+        const sunMap = new THREE.TextureLoader().load('./img/2k_sun.jpg');
+        const sunMaterial = new THREE.MeshBasicMaterial({ map: sunMap });
+
+        const earthMap = new THREE.TextureLoader().load('./img/Dh_earth_texture_retry.webp');
+        const earthMaterial = new THREE.MeshStandardMaterial({ map: earthMap });
+
+        const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+        const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        scene.add(sun);
+        sun.add(earth);
+
+        earth.position.x = 10;
+
+        // 設置攝影機位置
+        camera.position.set(0, 0, 15)
+
+        // 新增坐標軸
+        const axesHelper = new THREE.AxesHelper(3);
+        scene.add(axesHelper);
+
+        // 設置render loop(animate loop)
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+            // 設父數值子也會被影響
+            sun.rotation.y += 0.001;
+        }
+        animate();
+    </script>
+</body>
+
+</html>
