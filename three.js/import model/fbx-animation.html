@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+
+    <!-- <version>須改為版本，可用latest找最新版 -->
+    <script type="importmap">
+        {
+        "imports": {
+            "three": "https://unpkg.com/three@latest/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@latest/examples/jsm/"
+        }
+        }
+    </script>
+
+    <script type="module">
+
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+        import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+
+        // 新增場景
+        const scene = new THREE.Scene();
+        // 新增攝影機
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // 新增渲染器
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 新增控制器
+        const controls = new OrbitControls(camera, renderer.domElement);
+        
+        // 設置攝影機位置
+        camera.position.set(4, 1.5, -3);
+        // 設置攝影機旋轉角度
+        camera.rotation.set(0.5, 2.3, -0.4)
+        // 設背景顏色
+        scene.background = new THREE.Color('skyblue');
+        // 新增燈光
+        const light = new THREE.AmbientLight(0x404040, 100);
+        scene.add(light);
+        
+        // 新增FBXLoader
+        const loader = new FBXLoader();
+
+        let mixer;
+         // 匯入fbx(路徑, 加載完成後呼叫函數, 載入中呼叫函數, 讀取錯誤時呼叫函數)
+            loader.load(
+                './model/car_fbx.fbx',
+                (object) => {
+                    object.scale.set(.01, .01, .01);
+                    // log找動畫的clip(列在陣列)
+                    const clip = object.animations[0];
+                    mixer = new THREE.AnimationMixer(object);
+                    // 把動畫片段(clip)放入mixer
+                    const action = mixer.clipAction(clip);
+                    action.play();
+                    scene.add(object);
+                    
+                    const gui = new GUI()
+                    const carFolder = gui.addFolder('跑車')
+                    console.log(action);
+                    carFolder.add(action,'paused')
+                },
+                );
+
+                const clock = new THREE.Clock();
+                
+                // 設置render loop(animate loop)
+                function animate() {
+                    requestAnimationFrame(animate);
+                    const delta = clock.getDelta()
+                    if (mixer) mixer.update(delta);
+                    renderer.render(scene, camera);
+                }
+                animate();
+                </script>
+</body>
+
+</html>
