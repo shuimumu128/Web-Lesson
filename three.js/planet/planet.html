@@ -17,11 +17,29 @@
             background-size: cover;
             color: #ff9e86;
         }
+
+        .btns {
+            position: absolute;
+            top: 15px;
+        }
+
+        .btn {
+            float: left;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 16px;
+            padding: 5px 40px;
+            border-right: white solid 1px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
-    <!-- <img src="./img/2k_earth_daymap.jpg" alt=""> -->
+    <div class="btns">
+        <button type="button" class="btn" data-index="0">觀看太陽</button>
+        <button type="button" class="btn" data-index="1">觀看地球</button>
+    </div>
     <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
     <script type="importmap">
         {
@@ -36,10 +54,28 @@
 
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
         // 新增場景
         const scene = new THREE.Scene();
         // 新增攝影機
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const sunCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const earthCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // 設置攝影機位置
+        sunCamera.position.set(10, 2, 10)
+
+        // 設置切換攝影機用參數
+        let camIndex = 0;
+        const cameras = [
+            {
+                name: '太陽',
+                camera: sunCamera,
+            },
+            {
+                name: '地球',
+                camera: earthCamera,
+            },
+        ];
 
         // 新增渲染器
         const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -47,13 +83,13 @@
         document.body.appendChild(renderer.domElement);
 
         // 新增控制器
-        const controls = new OrbitControls(camera, renderer.domElement);
+        const controls = new OrbitControls(sunCamera, renderer.domElement);
 
         // 設置環境光 AmbientLight
         let ambientLight = new THREE.AmbientLight(0xeeffff, 0.1)
         scene.add(ambientLight)
         // 設置點光源 PointLight
-        let pointLight = new THREE.PointLight('white', 300)
+        let pointLight = new THREE.PointLight('white', 500)
         scene.add(pointLight)
         const sphereSize = 7;
         let pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize)
@@ -62,6 +98,7 @@
         // 新增模型
         const sunGeometry = new THREE.SphereGeometry(5, 32, 16);
         const earthGeometry = new THREE.SphereGeometry(1, 32, 16);
+        const moonGeometry = new THREE.SphereGeometry(0.2, 32, 16);
 
         const sunMap = new THREE.TextureLoader().load('./img/2k_sun.jpg');
         const sunMaterial = new THREE.MeshBasicMaterial({ map: sunMap });
@@ -69,26 +106,106 @@
         const earthMap = new THREE.TextureLoader().load('./img/Dh_earth_texture_retry.webp');
         const earthMaterial = new THREE.MeshStandardMaterial({ map: earthMap });
 
+        const moonMap = new THREE.TextureLoader().load('./img/lroc_color_poles_2k.jpg');
+        const moonMaterial = new THREE.MeshStandardMaterial({ map: moonMap });
+
         const sun = new THREE.Mesh(sunGeometry, sunMaterial);
         const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        const moon = new THREE.Mesh(moonGeometry, moonMaterial);
         scene.add(sun);
         sun.add(earth);
-
+        earth.add(moon);
+        
+        sun.position.set(0, 0, 0);
         earth.position.x = 10;
+        moon.position.x = 2;
 
-        // 設置攝影機位置
-        camera.position.set(0, 0, 15)
+        // 新增label
+        const sunDiv = document.createElement('div');
+        sunDiv.className = 'label';
+        sunDiv.textContent = 'sun';
+        sunDiv.style.marginTop = "-1em";
+        const sunLabel = new CSS2DObject(sunDiv);
+        sunLabel.position.set(0, 6, 0);
+        sun.add(sunLabel);
 
-        // 新增坐標軸
-        const axesHelper = new THREE.AxesHelper(3);
-        scene.add(axesHelper);
+        const earthDiv = document.createElement('div');
+        earthDiv.className = 'label';
+        earthDiv.textContent = 'earth';
+        earthDiv.style.marginTop = "-1em";
+        const earthLabel = new CSS2DObject(earthDiv);
+        earthLabel.position.set(0, 1.5, 0);
+        earth.add(earthLabel);
 
+        const moonDiv = document.createElement('div');
+        moonDiv.className = 'label';
+        moonDiv.textContent = 'moon';
+        moonDiv.style.marginTop = "-1em";
+        const moonLabel = new CSS2DObject(moonDiv);
+        moonLabel.position.set(0, 0.5, 0);
+        moon.add(moonLabel);
+
+        // // 新增坐標軸
+        // const axesHelper = new THREE.AxesHelper(3);
+        // scene.add(axesHelper);
+        
+        const btns = document.querySelectorAll('.btn')
+        btns.forEach((item) => {
+            item.addEventListener('click', () => {
+                camIndex = parseInt(item.dataset.index);
+                console.log(`正在觀看:${cameras[camIndex].name}`);
+            });
+        });
+        
+        window.addEventListener('resize', sceneResize)
+        function sceneResize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+            
+            cameras.forEach((item) => {
+                item.camera.aspect = window.innerWidth / window.innerHeight;
+                item.camera.updateProjectionMatrix();
+            })
+        };
+
+        // label設置
+        let labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = "absolute";
+        labelRenderer.domElement.style.pointerEvents = "none";
+        labelRenderer.domElement.style.color = 'white'
+        labelRenderer.domElement.style.top = "0px";
+        document.body.appendChild(labelRenderer.domElement);
+
+        // 公轉(圓周運動)函示
+        function rotatePosition(distance = 2, angle = 0) {
+            let x = distance * Math.sin(angle)
+            let z = distance * Math.cos(angle)
+            return { x, z }
+        }
+
+        let earthAngle = 0;
+        let moonAngle = 0;
         // 設置render loop(animate loop)
         function animate() {
             requestAnimationFrame(animate);
-            renderer.render(scene, camera);
             // 設父數值子也會被影響
-            sun.rotation.y += 0.001;
+            sun.rotation.y += 0.0001;
+            earth.rotation.y += 0.001;
+
+            // 設置公轉速率
+            earthAngle += 0.005;
+            moonAngle += 0.008;
+            let eObj = rotatePosition(10, earthAngle);
+            let mObj = rotatePosition(2, moonAngle);
+            earth.position.set(eObj.x, 0, eObj.z)
+            moon.position.set(mObj.x, 0, mObj.z)
+
+            earthCamera.position.set(earth.position.x + 3, earth.position.y + 1, earth.position.z + 3);
+            earthCamera.lookAt(earth.position);
+
+            renderer.render(scene, cameras[camIndex].camera);
+            labelRenderer.render(scene, cameras[camIndex].camera);
         }
         animate();
     </script>
