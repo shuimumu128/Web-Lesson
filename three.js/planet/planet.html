@@ -57,6 +57,12 @@
         import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
         // 新增場景
         const scene = new THREE.Scene();
+
+        // 偵測攝影機與滑鼠的兩點連線，最終投向的物件
+        const raycaster = new THREE.Raycaster();
+        // 設定滑鼠的位置
+        const pointer = new THREE.Vector2();
+
         // 新增攝影機
         const sunCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const earthCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -85,40 +91,50 @@
         // 新增控制器
         const controls = new OrbitControls(sunCamera, renderer.domElement);
 
-        // 設置環境光 AmbientLight
-        let ambientLight = new THREE.AmbientLight(0xeeffff, 0.1)
-        scene.add(ambientLight)
-        // 設置點光源 PointLight
-        let pointLight = new THREE.PointLight('white', 500)
-        scene.add(pointLight)
-        const sphereSize = 7;
-        let pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize)
-        scene.add(pointLightHelper)
-
         // 新增模型
         const sunGeometry = new THREE.SphereGeometry(5, 32, 16);
         const earthGeometry = new THREE.SphereGeometry(1, 32, 16);
         const moonGeometry = new THREE.SphereGeometry(0.2, 32, 16);
-
+        
         const sunMap = new THREE.TextureLoader().load('./img/2k_sun.jpg');
         const sunMaterial = new THREE.MeshBasicMaterial({ map: sunMap });
-
+        
         const earthMap = new THREE.TextureLoader().load('./img/Dh_earth_texture_retry.webp');
         const earthMaterial = new THREE.MeshStandardMaterial({ map: earthMap });
+        const earthLightMaterial = new THREE.MeshBasicMaterial({ map: earthMap });
+        let materials = [];
+        materials.push(earthMaterial, earthLightMaterial);
+        let earthMaterials = materials[0]
+        
 
         const moonMap = new THREE.TextureLoader().load('./img/lroc_color_poles_2k.jpg');
         const moonMaterial = new THREE.MeshStandardMaterial({ map: moonMap });
-
+        
         const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-        const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        const earth = new THREE.Mesh(earthGeometry, earthMaterials);
         const moon = new THREE.Mesh(moonGeometry, moonMaterial);
         scene.add(sun);
-        sun.add(earth);
+        scene.add(earth);
         earth.add(moon);
+        console.log(earth);
         
         sun.position.set(0, 0, 0);
         earth.position.x = 10;
         moon.position.x = 2;
+        
+        // 設置環境光 AmbientLight
+        let ambientLight = new THREE.AmbientLight(0xeeffff, 0.1);
+        scene.add(ambientLight);
+        // 設置太陽光
+        let pointLight = new THREE.PointLight('white', 300);
+        scene.add(pointLight);
+        const sphereSize = 7;
+        let pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize)
+        scene.add(pointLightHelper);
+        // 設置地球spot light
+        const earthLight = new THREE.SpotLight(0xffffff, 1000);
+        earthLight.angle = 0.172
+        const earthLightHelper = new THREE.SpotLightHelper(earthLight);
 
         // 新增label
         const sunDiv = document.createElement('div');
@@ -148,7 +164,7 @@
         // // 新增坐標軸
         // const axesHelper = new THREE.AxesHelper(3);
         // scene.add(axesHelper);
-        
+
         const btns = document.querySelectorAll('.btn')
         btns.forEach((item) => {
             item.addEventListener('click', () => {
@@ -156,17 +172,24 @@
                 console.log(`正在觀看:${cameras[camIndex].name}`);
             });
         });
-        
+
         window.addEventListener('resize', sceneResize)
+        window.addEventListener('mousemove', mouseMove)
+
         function sceneResize() {
             renderer.setSize(window.innerWidth, window.innerHeight);
             labelRenderer.setSize(window.innerWidth, window.innerHeight);
-            
+
             cameras.forEach((item) => {
                 item.camera.aspect = window.innerWidth / window.innerHeight;
                 item.camera.updateProjectionMatrix();
             })
         };
+
+        function mouseMove(event) {
+            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        }
 
         // label設置
         let labelRenderer = new CSS2DRenderer();
@@ -198,14 +221,32 @@
             moonAngle += 0.008;
             let eObj = rotatePosition(10, earthAngle);
             let mObj = rotatePosition(2, moonAngle);
-            earth.position.set(eObj.x, 0, eObj.z)
-            moon.position.set(mObj.x, 0, mObj.z)
+            earth.position.set(eObj.x, 0, eObj.z);
+            moon.position.set(mObj.x, 0, mObj.z);
 
+            // 攝影機跟隨
             earthCamera.position.set(earth.position.x + 3, earth.position.y + 1, earth.position.z + 3);
             earthCamera.lookAt(earth.position);
+            earthLight.position.set(earth.position.x, earth.position.y + 10, earth.position.z);
+            earthLight.target = earth;
 
-            renderer.render(scene, cameras[camIndex].camera);
+
+            raycaster.setFromCamera(pointer, cameras[camIndex].camera);
+            const intersects = raycaster.intersectObject(earth, false);
+            if (intersects.length > 0) {
+                // earthMaterials = materials[1]
+                // console.log(earth);
+                // earth.needsUpdate = true;
+                scene.add(earthLight);
+                scene.add(earthLightHelper);
+            } else {
+                
+                scene.remove(earthLight);
+                scene.remove(earthLightHelper);
+            };
+
             labelRenderer.render(scene, cameras[camIndex].camera);
+            renderer.render(scene, cameras[camIndex].camera);
         }
         animate();
     </script>
