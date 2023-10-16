@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        #container {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-color: aliceblue;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+
+    </div>
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+    <!-- <version>須改為版本，可用latest找最新版 -->
+    <script type="importmap">
+        {
+        "imports": {
+            "three": "https://unpkg.com/three@latest/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@latest/examples/jsm/"
+        }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        // 新增場景
+        const scene = new THREE.Scene();
+        // 新增攝影機
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        // 設置攝影機位置
+        camera.position.set(0, 5, 5);
+        camera.rotation.set(-0.5, 0, 0)
+
+        // 新增渲染器
+        const renderer = new THREE.WebGLRenderer();
+        // 設置render畫面尺寸
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const container = document.querySelector("#container");
+        // 將<canvas>加入HTML
+        container.appendChild(renderer.domElement);
+
+        // // 新增控制器
+        // const controls = new OrbitControls(camera, renderer.domElement);
+        // 新增網格
+        const gridHelper = new THREE.GridHelper(10, 10, 0xaec6cf, 0xaec6cf)
+        scene.add(gridHelper)
+        // 新增坐標軸
+        const axesHelper = new THREE.AxesHelper(3);
+        scene.add(axesHelper);
+
+        // 新增模型(BoxGeometry立方體)
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        // 新增材質
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true, });
+        // 新增模型表面(模型變數, 材質)
+        const cube = new THREE.Mesh(geometry, material);
+        // 加入場景
+        scene.add(cube);
+
+        // 符合螢幕尺寸
+        window.addEventListener('resize', onWindowResize, false)
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight
+            camera.updateProjectionMatrix()
+            renderer.setSize(window.innerWidth, window.innerHeight)
+            animate()
+        }
+
+        gsap.to(cube.position, {
+            y: 10,
+            scrollTrigger: {
+                trgger: container,
+                start: 0,
+                end: innerHeight,
+                scrub: 1
+            }
+
+        });
+
+        // 設置render loop(animate loop)
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+
+</html>
