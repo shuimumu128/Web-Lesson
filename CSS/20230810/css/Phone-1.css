@@ -1,0 +1,161 @@
+        * {
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            margin: 0;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+
+        .all {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .nav {
+            width: 100%;
+            height: 80px;
+            background-color: lightgray;
+            padding: 15px 5%;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            background-image: url(../img/cutlery_114858.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin: -50px auto 0;
+        }
+
+        .ham-btn {
+            width: 40px;
+            height: 50px;
+            background-color: rgba(173, 173, 173, 0);
+            display: block;
+            position: relative;
+            transition: 1s;
+        }
+
+        .ham-btn .line {
+            width: 25px;
+            height: 2px;
+            background-color: white;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: 1s;
+        }
+
+        .ham-btn .line-1 {
+            top: 30%;
+        }
+
+        .ham-btn .line-2 {
+            top: 50%;
+            transition: 0.5s;
+            transition-delay: 0.5s;
+        }
+
+        .ham-btn .line-3 {
+            top: 70%;
+        }
+
+        #ham-switch:checked+.ham-btn {
+            width: 100px;
+            background-color: rgba(173, 173, 173);
+            transition: 1s;
+        }
+
+        #ham-switch:checked+.ham-btn .line-1 {
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        #ham-switch:checked+.ham-btn .line-2 {
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        #ham-switch:checked+.ham-btn .line-3 {
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .nav-btn-all {
+            width: 40px;
+            height: 0;
+            background-color: rgb(173, 173, 173, 0);
+            position: absolute;
+            top: 65px;
+            z-index: 9;
+            overflow: clip;
+            transition: 1s;
+        }
+
+        #ham-switch:checked~.nav-btn-all {
+            width: 100px;
+            height: 125px;
+            transition: 1s;
+            background-color: rgb(173, 173, 173);
+        }
+
+        .nav-btn {
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+            color: rgb(88, 88, 88);
+        }
+
+        .nav-btn:hover {
+            color: grey;
+            text-shadow: 0 0 3px black;
+        }
+
+        .nav-btn:active {
+            color: rgb(51, 51, 51);
+        }
+
+        .container {
+            width: 100%;
+            height: calc(100% - 80px);
+        }
+
+        .content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .img {
+            width: 100%;
+            height: calc(100% / 3);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .img:hover {
+            transform: scale(0.98);
+            opacity: 0.5;
+        }
+
+        .img:active {
+            transform: scale(1);
+        }
+
+        .img-x {
+            background-image: url(../img/Pizza.jpg);
+        }
+
+        .img-y {
+            background-image: url(../img/熱炒.jpg);
+        }
+
+        .img-z {
+            background-image: url(../img/Sushi.jpg);
+        }

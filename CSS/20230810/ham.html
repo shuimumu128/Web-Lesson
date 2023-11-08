@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .ham-btn {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            display: block;
+            position: relative;
+        }
+
+        .ham-btn .line {
+            width: 80px;
+            height: 10px;
+            background-color: white;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: 1s;
+        }
+
+        .ham-btn .line-1 {
+            top: 30%;
+        }
+
+        .ham-btn .line-2 {
+            top: 50%;
+            transition: 0.5s;
+            transition-delay: 0.5s;
+        }
+
+        .ham-btn .line-3 {
+            top: 70%;
+        }
+
+        #ham-switch:checked+.ham-btn .line-1 {
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        #ham-switch:checked+.ham-btn .line-2 {
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        #ham-switch:checked+.ham-btn .line-3 {
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+    </style>
+</head>
+
+<body>
+    <input type="checkbox" id="ham-switch" hidden>
+    <label for="ham-switch" class="ham-btn">
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+    </label>
+</body>
+
+</html>
