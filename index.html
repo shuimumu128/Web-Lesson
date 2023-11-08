@@ -6,23 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <title>Shuimumu</title>
-    <style>
-        a {
-            color: rgb(122, 122, 122);
-            transition: 0.3s;
-        }
+    <link rel="icon" href="./img/icon.png" type="image/x-icon" />
+        <title>Shuimumu</title>
 
-        a:hover {
-            color: white;
-            text-shadow: 0 0 5px black;
-            transition: 0.3s;
-        }
+        <style>
+            a {
+                color: rgb(122, 122, 122);
+                transition: 0.3s;
+            }
 
-        li {
-            line-height: 30px;
-        }
-    </style>
+            a:hover {
+                color: white;
+                text-shadow: 0 0 5px black;
+                transition: 0.3s;
+            }
+
+            li {
+                line-height: 30px;
+            }
+
+            .carousel {
+                margin-top: 46px;
+            }
+
+            @media (max-width: 475px) {
+                #about {
+                    padding: 48px 0 !important;
+                }
+
+                #about img {
+                    width: 100% !important;
+                }
+            }
+        </style>
 </head>
 
 <body>
@@ -43,14 +59,15 @@
                         <a class="nav-link" href="#about">About</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Work
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Work
                         </a>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#animation">動畫</a></li>
-                          <li><a class="dropdown-item" href="#design">影像</a></li>
-                          <li><a class="dropdown-item" href="#web">網頁</a></li>
-                          <li><a class="dropdown-item" href="#else">其他</a></li>
+                            <li><a class="dropdown-item" href="#animation">動畫</a></li>
+                            <li><a class="dropdown-item" href="#design">影像</a></li>
+                            <li><a class="dropdown-item" href="#web">網頁</a></li>
+                            <li><a class="dropdown-item" href="#else">其他</a></li>
                         </ul>
                 </ul>
             </div>
@@ -93,21 +110,21 @@
     <main class="container">
         <div id="about" class="card m-5 p-5 border-0 border-bottom">
             <div class="row g-0 pb-5">
-              <div class="col-md-4">
-                <img src="./img/photo.png" class="img-fluid rounded-4 p-2 w-75" alt="...">
-              </div>
-              <div class="col-md-8 pt-4">
-                <div class="card-body">
-                  <h5 class="card-title">About</h5>
-                  <p class="card-text">許莛湘 Shuimumu</p>
-                  <p class="card-text"><small class="text-body-secondary">
-                    喜歡研究不同媒材的動態／影像呈現，熱愛表演藝術，對接觸新事物與表現方式充滿熱情。<br>
-                    畢業於實踐大學媒體傳達設計學系３Ｄ動畫組，嘗試過２Ｄ、３Ｄ、實物逐格等不同手法。對視覺展現富有熱忱，也曾進行錄像、大型裝置、燈光設計等專案，能為微小的調整付出大量耐心與時間。在校期間積極參與公共事務。為系學會、畢籌會一員，多次舉辦活動及展覽並負責展場規劃，包含校內競賽、大型演出和校外畢業展覽。
-                </small></p>
+                <div class="col-md-4">
+                    <img src="./img/photo.png" class="img-fluid rounded-4 p-2 w-75" alt="...">
                 </div>
-              </div>
+                <div class="col-md-8 pt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">About</h5>
+                        <p class="card-text">許莛湘 Shuimumu</p>
+                        <p class="card-text"><small class="text-body-secondary">
+                                喜歡研究不同媒材的動態／影像呈現，熱愛表演藝術，對接觸新事物與表現方式充滿熱情。<br>
+                                畢業於實踐大學媒體傳達設計學系３Ｄ動畫組，嘗試過２Ｄ、３Ｄ、實物逐格等不同手法。對視覺展現富有熱忱，也曾進行錄像、大型裝置、燈光設計等專案，能為微小的調整付出大量耐心與時間。在校期間積極參與公共事務。為系學會、畢籌會一員，多次舉辦活動及展覽並負責展場規劃，包含校內競賽、大型演出和校外畢業展覽。
+                            </small></p>
+                    </div>
+                </div>
             </div>
-          </div>
+        </div>
         <div class="cards row justify-content-center py-5">
             <div class="card text-center border-0 col-lg-4">
                 <div class="card-header border-0 bg-white">
@@ -117,8 +134,8 @@
                     <h5 class="card-title mb-3 fw-bold">動畫製作</h5>
                     <p class="card-text">可由分鏡到最終合成獨立產出作品。</p>
                     <p class="card-text"><small class="text-body-secondary">
-                        #MAYA #ZBrush #Blender #Substance Painter
-                    </small></p>
+                            #MAYA #ZBrush #Blender #Substance Painter
+                        </small></p>
                     <a href="https://www.behance.net/shuimumuidc" target="_blank" class="btn btn-secondary">Behance</a>
                 </div>
             </div>
@@ -130,9 +147,10 @@
                     <h5 class="card-title mb-3 fw-bold">影像處理</h5>
                     <p class="card-text">可進行平面排版設計、影音剪輯、後製特效。</p>
                     <p class="card-text"><small class="text-body-secondary">
-                        #Illustrator #Photoshop #Premiere #After Effects
-                    </small></p>
-                    <a href="https://youtu.be/D96foLFxehM?si=asAPrh-vpj1xQ20R" target="_blank" class="btn btn-secondary">Showreel</a>
+                            #Illustrator #Photoshop #Premiere #After Effects
+                        </small></p>
+                    <a href="https://youtu.be/D96foLFxehM?si=asAPrh-vpj1xQ20R" target="_blank"
+                        class="btn btn-secondary">Showreel</a>
                 </div>
             </div>
             <div class="card text-center border-0 col-lg-4">
@@ -143,8 +161,8 @@
                     <h5 class="card-title mb-3 fw-bold">網頁前端</h5>
                     <p class="card-text">可操作基礎的語言與套件、3D Web製作。</p>
                     <p class="card-text"><small class="text-body-secondary">
-                        #HTML #CSS #JavaScript #Sass #Vue.js #Three.js
-                    </small></p>
+                            #HTML #CSS #JavaScript #Sass #Vue.js #Three.js
+                        </small></p>
                     <a href="https://github.com/shuimumu128" target="_blank" class="btn btn-secondary">Github</a>
                 </div>
             </div>
@@ -163,19 +181,21 @@
                             你怎麼可以快樂？ How Could You be Happy?</a>
                     </li>
                     <li>
-                        <a href="https://youtu.be/iIml8s04vKk" target="_blank" rel="noopener noreferrer" class="">    
+                        <a href="https://youtu.be/iIml8s04vKk" target="_blank" rel="noopener noreferrer" class="">
                             你說，這是愛 You Say, It's Love</a>
                     </li>
                 </ul>
             </div>
             <div class="img col-5">
-                <img src="./img/animation.png" alt="" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
+                <img src="./img/animation.png" alt=""
+                    class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
             </div>
         </div>
         <hr class="featurette-divider my-5">
         <div id="design" class="content row py-5 align-items-center">
             <div class="img col-5">
-                <img src="./img/design.png" alt="" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
+                <img src="./img/design.png" alt=""
+                    class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
             </div>
             <div class="text col-7 h-100">
                 <h1 class="mb-4">VIDEO</h1>
@@ -201,7 +221,8 @@
                 <h1 class="mb-4">WEB</h1>
                 <ul>
                     <li>
-                        <a href="https://112-07-nchu-nooneistalkingnow.dev-hub.io/" target="_blank" rel="noopener noreferrer">
+                        <a href="https://112-07-nchu-nooneistalkingnow.dev-hub.io/" target="_blank"
+                            rel="noopener noreferrer">
                             中興大學綜合大樓7樓導覽
                         </a>
                     </li>
@@ -241,12 +262,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="./CSS/20230807-parallax(id)/parallax-mask.html" target="_blank" rel="noopener noreferrer">
+                        <a href="./CSS/20230807-parallax(id)/parallax-mask.html" target="_blank"
+                            rel="noopener noreferrer">
                             Parallax
                         </a>
                     </li>
                     <li>
-                        <a href="./CSS/20230808-parallax(超連結)/parallax-top.html" target="_blank" rel="noopener noreferrer">
+                        <a href="./CSS/20230808-parallax(超連結)/parallax-top.html" target="_blank"
+                            rel="noopener noreferrer">
                             Parallax-href
                         </a>
                     </li>
@@ -258,13 +281,15 @@
                 </ul>
             </div>
             <div class="img col-5">
-                <img src="./img/web.png" alt="" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
+                <img src="./img/web.png" alt=""
+                    class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
             </div>
         </div>
         <hr class="featurette-divider my-5">
         <div id="else" class="content row py-5 align-items-center">
             <div class="img col-5">
-                <img src="./img/else.png" alt="" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
+                <img src="./img/else.png" alt=""
+                    class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
             </div>
             <div class="text col-7 h-100">
                 <h1 class="mb-4">ELSE</h1>
@@ -286,18 +311,20 @@
                             《黑暗車站》二期-企劃文案執行</a>
                     </li>
                     <li>
-                        <a href="https://xenophobiaaibohpon.wixsite.com/xenophobia" target="_blank" rel="noopener noreferrer">
+                        <a href="https://xenophobiaaibohpon.wixsite.com/xenophobia" target="_blank"
+                            rel="noopener noreferrer">
                             《Xenophobia》-企劃文案執行</a>
                     </li>
                 </ul>
             </div>
-            
+
         </div>
         <hr class="featurette-divider my-5">
     </main>
     <footer class="container">
-        <p class="float-start mb-5">Contact me : 
-            <a href="mailto:Shuimumu.idc@gmail.com">Shuimumu.idc@gmail.com</a></p>
+        <p class="float-start mb-5">Contact me :
+            <a href="mailto:Shuimumu.idc@gmail.com">Shuimumu.idc@gmail.com</a>
+        </p>
         <a href="#" class="float-end mb-5">Back to top</a>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
